@@ -2,7 +2,7 @@
 RWA Off Exchange Projects
 
 # The official website
-http://dmz.finance
+https://dmz.finance
 
 # Ethereum main network deployment address
 Ethereum main network deployment address: MyToken contrace address "0x24A5cc699D690187076ABf10540ADdACAA983987", Name: DST, Symbol: DST .
