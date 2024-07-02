@@ -1,7 +1,7 @@
-# dmz
+# DMZ
 RWA Off Exchange Projects
 
-# official website
+# THE official website
 http://dmz.finance
 
 # Ethereum main network deployment address
