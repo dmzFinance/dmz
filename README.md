@@ -5,9 +5,9 @@ RWA Off Exchange Projects
 https://dmz.finance
 
 # Ethereum main network deployment address
-Ethereum main network deployment address: <br>MyToken contrace address "0x24A5cc699D690187076ABf10540ADdACAA983987", Name: DST, Symbol: DST <br><br>
-Ethereum main network deployment address: <br>DMZStake contrace address "0x99E820B7f9d0C82fD4E71f29C61983cc1caD7812"<br><br>
-Ethereum main network deployment address: <br>IdentityRegistry contrace address "0x347794a9558e26378993e95B37C66A3671d57706"<br><br>
+MyToken contrace address "0x24A5cc699D690187076ABf10540ADdACAA983987", Name: DST, Symbol: DST <br><br>
+DMZStake contrace address "0x99E820B7f9d0C82fD4E71f29C61983cc1caD7812"<br><br>
+IdentityRegistry contrace address "0x347794a9558e26378993e95B37C66A3671d57706"<br><br>
 
 ## Concept
 DMZ Fintech Pte. Ltd. is a financial technology company headquartered in Singapore.<br>
