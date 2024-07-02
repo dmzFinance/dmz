@@ -5,10 +5,12 @@ RWA Off Exchange Projects
 [https://dmz.finance](https://dmz.finance)
 
 ## Concept
+<div align="center"><img src="https://dmz.finance/img/about1.c461ac8c.png"></div>
 DMZ Fintech Pte. Ltd. is a financial technology company headquartered in Singapore.<br>
 The concept of DMZ comes from Demilitarized Zone, meaning a risk-isolating middle zone between two interconnected camps, TradFi and Crypto World.
 
 ## Mission
+<div align="center"><img src="https://dmz.finance/img/about2.96482ae4.png"></div>
 Our mission is to provide secure and efficient solutions to integrate RWA on-chain to access deep liquidity while isolating inherent counterparty risks.<br>
 We provide secure and efficient solutions that seamlessly integrate Real World Assets (RWA) onto blockchain platforms. Our focus is on providing a robust framework that enables investors and exchanges to access deep liquidity while effectively isolating inherent counterparty risks. By bridging the gap between traditional finance and web3, we aim to empower our clients to leverage the transformative potential of blockchain technology while ensuring the integrity and security of their assets.<br>
 
