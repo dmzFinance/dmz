@@ -2,7 +2,7 @@
 RWA Off Exchange Projects
 
 # The official website
-https://dmz.finance
+[DMZ](https://dmz.finance?_blank)
 
 ## Concept
 DMZ Fintech Pte. Ltd. is a financial technology company headquartered in Singapore.<br>
