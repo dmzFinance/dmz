@@ -20,6 +20,6 @@ DMZStake contract address 0x99E820B7f9d0C82fD4E71f29C61983cc1caD7812 <br>URL: ht
 IdentityRegistry contract address 0x347794a9558e26378993e95B37C66A3671d57706 <br>URL: https://etherscan.io/address/0x347794a9558e26378993e95B37C66A3671d57706<br><br>
 
 # Ethereum sepolia network deployment address
-MyToken contract address 0x0a3C43beB92a36e7cC6DC26F27735F6615A89740, Name: DST, Symbol: DST. <br>URL: https://sepolia.etherscan.io/address/0x0a3C43beB92a36e7cC6DC26F27735F6615A89740<br><br>
-DMZStake contract address 0x949fED5AFA0b4616E32E52E61df1A300C3e79950 <br>URL: https://sepolia.etherscan.io/address/0x949fED5AFA0b4616E32E52E61df1A300C3e79950<br><br>
-IdentityRegistry contract address 0x7265BA4Bf4328ccC66DD33BcB1F2BbdDcF91F98B <br>URL: https://sepolia.etherscan.io/address/0x7265BA4Bf4328ccC66DD33BcB1F2BbdDcF91F98B<br><br>
+MyToken contract address 0xE27F8b24AdC67191089EE224044a83cFb99C094F, Name: DST, Symbol: DST. <br>URL: https://sepolia.etherscan.io/address/0x0a3C43beB92a36e7cC6DC26F27735F6615A89740<br><br>
+DMZStake contract address 0xA08e443E561B646265a5D06aa70510cF232fd35c <br>URL: https://sepolia.etherscan.io/address/0x949fED5AFA0b4616E32E52E61df1A300C3e79950<br><br>
+IdentityRegistry contract address 0x09A186955598fE3269e21388d7D30fE9f7125822 <br>URL: https://sepolia.etherscan.io/address/0x7265BA4Bf4328ccC66DD33BcB1F2BbdDcF91F98B<br><br>
