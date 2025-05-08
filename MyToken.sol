@@ -122,6 +122,7 @@ contract MyToken is ERC20, ERC20Burnable, ERC20Pausable, Ownable, ERC20Permit, A
 
 
     function approveRequest(bytes32 requestID) public onlyRole(FUND_MANAGER_ROLE) {
+        require(_requests[requestID].requestedAt != 0, "Request does not exist");
         require(_requests[requestID].status == RequestStatus.Pending, "Request is not pending");
         TokenRequest storage request = _requests[requestID];
         
@@ -137,6 +138,7 @@ contract MyToken is ERC20, ERC20Burnable, ERC20Pausable, Ownable, ERC20Permit, A
     }
 
     function rejectRequest(bytes32 requestID) public onlyRole(FUND_MANAGER_ROLE) {
+        require(_requests[requestID].requestedAt != 0, "Request does not exist");
         require(_requests[requestID].status == RequestStatus.Pending, "Request is not pending");
         TokenRequest storage request = _requests[requestID];
 

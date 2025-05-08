@@ -15,7 +15,6 @@ contract IdentityRegistry is AccessControl, IIdentityRegistry {
     uint256 public maxWalletsPerIdentity;
     mapping(bytes32 => Identity) private identities;
     mapping(address => bytes32) private addressToHashTx;
-    address[] public admins;
 
     modifier onlyAdmin() {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Only the admin can call this function");
@@ -24,7 +23,6 @@ contract IdentityRegistry is AccessControl, IIdentityRegistry {
 
     constructor(uint256 _maxWalletsPerIdentity) {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        admins.push(msg.sender);
         maxWalletsPerIdentity = _maxWalletsPerIdentity;
     }
 
@@ -107,32 +105,20 @@ contract IdentityRegistry is AccessControl, IIdentityRegistry {
     }
 
     function addAdmin(address newAdmin) external onlyAdmin {
-        require(!isAdmin(newAdmin), "Address is already an admin");
+        require(!hasRole(DEFAULT_ADMIN_ROLE, newAdmin), "Address is already an admin");
         grantRole(DEFAULT_ADMIN_ROLE, newAdmin);
-        admins.push(newAdmin);
+        emit AdminAdded(newAdmin);
     }
-
-    function isAdmin(address admin) public view returns (bool) {
-        for (uint i = 0; i < admins.length; i++) {
-            if (admins[i] == admin) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     function removeAdmin(address adminToRemove) external onlyAdmin {
         revokeRole(DEFAULT_ADMIN_ROLE, adminToRemove);
-        for (uint256 i = 0; i < admins.length; i++) {
-            if (admins[i] == adminToRemove) {
-                admins[i] = admins[admins.length - 1];
-                admins.pop();
-                break;
-            }
-        }
         emit AdminRemoved(adminToRemove);
     }
+
+    function isAdmin(address admin) public view returns (bool) {
+        return hasRole(DEFAULT_ADMIN_ROLE, admin);
+    }
+
     function addWallets(bytes32 hashTx, address[] memory newWallets) external onlyAdmin {
         Identity storage identity = identities[hashTx];
         require(identity.expiryDate > 0, "Identity not found");
