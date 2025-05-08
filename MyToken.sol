@@ -27,6 +27,7 @@ contract MyToken is ERC20, ERC20Burnable, ERC20Pausable, Ownable, ERC20Permit, A
         uint256 finalizedAt;
     }
     bytes32 private _lastRequestID = 0x0;
+    uint256 private _requestCounter = 0;
     mapping(bytes32 => TokenRequest) private _requests;
     mapping(address => bool) private _frozenAccounts;
     mapping(address => uint256) private _temporaryBalances;
@@ -79,8 +80,9 @@ contract MyToken is ERC20, ERC20Burnable, ERC20Pausable, Ownable, ERC20Permit, A
     function mintRequest(address to, uint256 amount) public returns (bytes32) {
         require(to != address(0), "Mint to the zero address");
         require(amount > 0, "Mint amount must be positive");
+        _requestCounter++;
 
-        bytes32 requestID = keccak256(abi.encodePacked(block.timestamp, msg.sender, _lastRequestID));
+        bytes32 requestID = keccak256(abi.encodePacked(block.timestamp, msg.sender, _lastRequestID, uint8(RequestType.Mint), _requestCounter));
         _requests[requestID] = TokenRequest({
             requestType: RequestType.Mint,
             requester: msg.sender,
@@ -97,8 +99,9 @@ contract MyToken is ERC20, ERC20Burnable, ERC20Pausable, Ownable, ERC20Permit, A
 
     function burnRequest(uint256 amount) public returns (bytes32) {
         require(amount > 0, "Burn amount must be positive");
-
-        bytes32 requestID = keccak256(abi.encodePacked(block.timestamp, msg.sender, _lastRequestID));
+        
+        _requestCounter++;
+        bytes32 requestID = keccak256(abi.encodePacked(block.timestamp, msg.sender, _lastRequestID, uint8(RequestType.Burn), _requestCounter));
         _temporaryBalances[msg.sender] += amount;
         _requests[requestID] = TokenRequest({
             requestType: RequestType.Burn,
@@ -119,6 +122,7 @@ contract MyToken is ERC20, ERC20Burnable, ERC20Pausable, Ownable, ERC20Permit, A
 
 
     function approveRequest(bytes32 requestID) public onlyRole(FUND_MANAGER_ROLE) {
+        require(_requests[requestID].requestedAt != 0, "Request does not exist");
         require(_requests[requestID].status == RequestStatus.Pending, "Request is not pending");
         TokenRequest storage request = _requests[requestID];
         
@@ -134,6 +138,7 @@ contract MyToken is ERC20, ERC20Burnable, ERC20Pausable, Ownable, ERC20Permit, A
     }
 
     function rejectRequest(bytes32 requestID) public onlyRole(FUND_MANAGER_ROLE) {
+        require(_requests[requestID].requestedAt != 0, "Request does not exist");
         require(_requests[requestID].status == RequestStatus.Pending, "Request is not pending");
         TokenRequest storage request = _requests[requestID];
 
