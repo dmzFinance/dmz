@@ -22,6 +22,7 @@ contract IdentityRegistry is AccessControl, IIdentityRegistry {
     }
 
     constructor(uint256 _maxWalletsPerIdentity) {
+        require(_maxWalletsPerIdentity > 0, "Maximum wallets per identity must be greater than zero");
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         maxWalletsPerIdentity = _maxWalletsPerIdentity;
     }
@@ -39,19 +40,16 @@ contract IdentityRegistry is AccessControl, IIdentityRegistry {
         Identity storage newIdentity = identities[hashTx];
         require(newIdentity.expiryDate == 0, "Identity already exists");
 
-        // Check if each wallet is already associated with another identity
         for (uint256 i = 0; i < wallets.length; i++) {
             require(addressToHashTx[wallets[i]] == bytes32(0), "One or more wallets are already registered");
+            addressToHashTx[wallets[i]] = hashTx;
         }
 
         newIdentity.expiryDate = expiryDate;
         newIdentity.data = data;
         newIdentity.country = country;
         newIdentity.wallets = wallets;
-
-        for (uint256 i = 0; i < wallets.length; i++) {
-            addressToHashTx[wallets[i]] = hashTx;
-        }
+        
         emit IdentityRegistered(hashTx, expiryDate, wallets, country, data);
     }
 
@@ -76,16 +74,13 @@ contract IdentityRegistry is AccessControl, IIdentityRegistry {
 
             for (uint256 i = 0; i < walletsLists[j].length; i++) {
                 require(addressToHashTx[walletsLists[j][i]] == bytes32(0), "One or more wallets are already registered");
+                addressToHashTx[walletsLists[j][i]] = hashTxs[j];
             }
 
             newIdentity.expiryDate = expiryDates[j];
             newIdentity.data = datas[j];
             newIdentity.country = countries[j];
             newIdentity.wallets = walletsLists[j];
-
-            for (uint256 i = 0; i < walletsLists[j].length; i++) {
-                addressToHashTx[walletsLists[j][i]] = hashTxs[j];
-            }
 
             emit IdentityRegistered(hashTxs[j], expiryDates[j], walletsLists[j], countries[j], datas[j]);
         }
@@ -122,6 +117,7 @@ contract IdentityRegistry is AccessControl, IIdentityRegistry {
     function addWallets(bytes32 hashTx, address[] memory newWallets) external onlyAdmin {
         Identity storage identity = identities[hashTx];
         require(identity.expiryDate > 0, "Identity not found");
+        require(identity.expiryDate > block.timestamp, "Identity has expired");
         require(identity.wallets.length + newWallets.length <= maxWalletsPerIdentity, "Exceeds maximum wallets allowed per identity");
         
         for (uint256 j = 0; j < newWallets.length; j++) {
@@ -156,6 +152,8 @@ contract IdentityRegistry is AccessControl, IIdentityRegistry {
     function updateExpiryDate(bytes32 hashTx, uint256 newExpiryDate) external onlyAdmin {
         Identity storage identity = identities[hashTx];
         require(identity.expiryDate > 0, "Identity not found");
+        require(newExpiryDate > block.timestamp, "New expiry date must be in the future");
+
         identity.expiryDate = newExpiryDate;
         emit ExpiryDateUpdated(hashTx, newExpiryDate);
     }
@@ -163,6 +161,8 @@ contract IdentityRegistry is AccessControl, IIdentityRegistry {
     function updateCountry(bytes32 hashTx, bytes32 country) external onlyAdmin {
         Identity storage identity = identities[hashTx];
         require(identity.expiryDate > 0, "Identity not found");
+        require(identity.expiryDate > block.timestamp, "Identity has expired");
+
         identity.country = country;
         emit CountryUpdated(hashTx, country);
     }
@@ -170,6 +170,8 @@ contract IdentityRegistry is AccessControl, IIdentityRegistry {
     function updateData(bytes32 hashTx, bytes32 data) external onlyAdmin {
         Identity storage identity = identities[hashTx];
         require(identity.expiryDate > 0, "Identity not found");
+        require(identity.expiryDate > block.timestamp, "Identity has expired");
+
         identity.data = data;
         emit DataUpdated(hashTx, data);
     }
@@ -185,12 +187,7 @@ contract IdentityRegistry is AccessControl, IIdentityRegistry {
             return (false, identity.country);
         }
 
-        for (uint256 i = 0; i < identity.wallets.length; i++) {
-            if (identity.wallets[i] == walletToVerify) {
-                return (true, identity.country);
-            }
-        }
-        return (false, bytes32(0));
+        return (true, identity.country);
     }
 
 
