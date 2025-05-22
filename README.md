@@ -16,10 +16,14 @@ We provide secure and efficient solutions that seamlessly integrate Real World A
 
 # Ethereum main network deployment address
 IdentityRegistry contract address 0x7308b59a06702Df1edE3C6d669F80C471637aa0d <br>URL: https://etherscan.io/address/0x7308b59a06702Df1edE3C6d669F80C471637aa0d<br><br>
-QCDT Token contract address 0xF7aBd7c02b3d4ac5A78Ba94F0029785b379C5014, Name: DST, Symbol: DST. <br>URL: https://etherscan.io/address/0xF7aBd7c02b3d4ac5A78Ba94F0029785b379C5014<br><br>
+QCDT Token contract address 0xF7aBd7c02b3d4ac5A78Ba94F0029785b379C5014, Name: QCDT, Symbol: QCDT. <br>
+URL address: https://etherscan.io/address/0xF7aBd7c02b3d4ac5A78Ba94F0029785b379C5014<br>
+URL token: https://etherscan.io/token/0xF7aBd7c02b3d4ac5A78Ba94F0029785b379C5014<br><br>
 Stake contract address 0x99E820B7f9d0C82fD4E71f29C61983cc1caD7812 <br>URL: https://etherscan.io/address/0x99E820B7f9d0C82fD4E71f29C61983cc1caD7812<br><br>
 
 # Ethereum sepolia network deployment address
 IdentityRegistry contract address 0x65DBCFc67713092aaa3eCD30C8Fe3D6bB38ECb2C <br>URL: https://sepolia.etherscan.io/address/0x65DBCFc67713092aaa3eCD30C8Fe3D6bB38ECb2C<br><br>
-QCDT Token contract address 0xa3392c2581719c5Cd5eeDa88c39030e2f278e93D, Name: DST, Symbol: DST. <br>URL: https://sepolia.etherscan.io/address/0xa3392c2581719c5Cd5eeDa88c39030e2f278e93D<br><br>
+QCDT Token contract address 0xa3392c2581719c5Cd5eeDa88c39030e2f278e93D, Name: QCDT, Symbol: QCDT. <br>
+URL address: https://sepolia.etherscan.io/address/0xa3392c2581719c5Cd5eeDa88c39030e2f278e93D<br>
+URL token: https://sepolia.etherscan.io/token/0xa3392c2581719c5Cd5eeDa88c39030e2f278e93D<br><br>
 Stake contract address 0xA08e443E561B646265a5D06aa70510cF232fd35c <br>URL: https://sepolia.etherscan.io/address/0xA08e443E561B646265a5D06aa70510cF232fd35c<br><br>
