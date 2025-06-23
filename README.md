@@ -6,13 +6,10 @@ RWA Off Exchange Projects
 
 ## Concept
 <div align="center"><img src="https://dmz.finance/img/kt.d1ba1331.png"></div>
-DMZ.finance is a financial tehnology company headquartered in Singapore.
-The concept of DMZ comes from Demilitarized Zone, meaning a risk-isolating middle zone between two interconnected camps, TradFi and Crypto World.
+DMZ is a blockchain technology solution provider. It has a strategic partnership with Qatar National Bank (QNB), the largest bank in the Middle East and Africa, and has joined the Qatar Financial Centre’s Digital Asset Lab through its strong recognition.<br><br>
+Committed to unlocking the trillion-dollar potential of the RWA market, DMZ collaborates with leading global banks to provide comprehensive, institutional-grade solutions for traditional financial institutions and investors.<br><br>
 
-## Mission
-<div align="center" style="display:none;"><img src="https://dmz.finance/img/banner-bg.0a0f9559-dlt.jpg"></div>
-Our mission is to provide secure and efficient solutions to integrate RWA on-chain to access deep liquidity while isolating inherent counterparty risks.<br>
-We provide secure and efficient solutions that seamlessly integrate Real World Assets (RWA) onto blockchain platforms. Our focus is on providing a robust framework that enables investors and exchanges to access deep liquidity while effectively isolating inherent counterparty risks. By bridging the gap between traditional finance and web3, we aim to empower our clients to leverage the transformative potential of blockchain technology while ensuring the integrity and security of their assets.<br>
+DMZ Finance has been selected as a first-round participant in the prestigious QFC Digital Assets Lab, a groundbreaking initiative powered by the Central Bank of Qatar and hosted by the Qatar Financial Centre (QFC) — Doha’s leading onshore financial and business hub. This selection highlights DMZ’s cutting-edge blockchain technology.<br>
 
 # Ethereum main network deployment address
 IdentityRegistry contract address 0x7308b59a06702Df1edE3C6d669F80C471637aa0d <br>URL: https://etherscan.io/address/0x7308b59a06702Df1edE3C6d669F80C471637aa0d<br><br>
