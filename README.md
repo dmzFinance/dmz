@@ -10,7 +10,7 @@ DMZ.finance is a financial tehnology company headquartered in Singapore.
 The concept of DMZ comes from Demilitarized Zone, meaning a risk-isolating middle zone between two interconnected camps, TradFi and Crypto World.
 
 ## Mission
-<div align="center"><img src="https://dmz.finance/img/banner-bg.0a0f9559.jpg"></div>
+<div align="center" style="display:none;"><img src="https://dmz.finance/img/banner-bg.0a0f9559-dlt.jpg"></div>
 Our mission is to provide secure and efficient solutions to integrate RWA on-chain to access deep liquidity while isolating inherent counterparty risks.<br>
 We provide secure and efficient solutions that seamlessly integrate Real World Assets (RWA) onto blockchain platforms. Our focus is on providing a robust framework that enables investors and exchanges to access deep liquidity while effectively isolating inherent counterparty risks. By bridging the gap between traditional finance and web3, we aim to empower our clients to leverage the transformative potential of blockchain technology while ensuring the integrity and security of their assets.<br>
 
