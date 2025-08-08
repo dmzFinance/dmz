@@ -12,10 +12,13 @@ Committed to unlocking the trillion-dollar potential of the RWA market, DMZ coll
 DMZ Finance has been selected as a first-round participant in the prestigious QFC Digital Assets Lab, a groundbreaking initiative powered by the Central Bank of Qatar and hosted by the Qatar Financial Centre (QFC) — Doha’s leading onshore financial and business hub. This selection highlights DMZ’s cutting-edge blockchain technology.<br>
 
 # Ethereum main network deployment address
-IdentityRegistry contract address 0x7308b59a06702Df1edE3C6d669F80C471637aa0d <br>URL: https://etherscan.io/address/0x7308b59a06702Df1edE3C6d669F80C471637aa0d<br><br>
-QCDT Token contract address 0xF7aBd7c02b3d4ac5A78Ba94F0029785b379C5014, Name: QCD Money Market Fund Token, Symbol: QCDT. <br>
-URL address: https://etherscan.io/address/0xF7aBd7c02b3d4ac5A78Ba94F0029785b379C5014<br>
-URL token: https://etherscan.io/token/0xF7aBd7c02b3d4ac5A78Ba94F0029785b379C5014<br><br>
+IdentityRegistry contract address 0x35710A443C05BE3d021Ac08B9e210401A733F955 <br>
+URL: https://etherscan.io/address/0x35710A443C05BE3d021Ac08B9e210401A733F955<br><br>
+
+QCDT Token contract address 0xFdc381Edc0b2028693c5A3825621316bC2880275, Name: QCD Money Market Fund Token, Symbol: QCDT. <br>
+URL address: https://etherscan.io/address/0xFdc381Edc0b2028693c5A3825621316bC2880275<br>
+URL token: https://etherscan.io/token/0xFdc381Edc0b2028693c5A3825621316bC2880275<br><br>
+
 Stake contract address 0x99E820B7f9d0C82fD4E71f29C61983cc1caD7812 <br>URL: https://etherscan.io/address/0x99E820B7f9d0C82fD4E71f29C61983cc1caD7812<br><br>
 
 # Ethereum sepolia network deployment address
