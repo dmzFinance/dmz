@@ -468,7 +468,6 @@ contract MyToken is
 
         IERC20 tokenContract = IERC20(token);
         uint256 balance = tokenContract.balanceOf(address(this));
-        require(balance > 0, "No tokens to recover");
 
         // If amount is 0, recover all available balance
         uint256 recoverAmount = amount == 0 ? balance : amount;
@@ -490,14 +489,13 @@ contract MyToken is
         require(to != address(0), "Recipient address cannot be zero");
 
         uint256 balance = address(this).balance;
-        require(balance > 0, "No ether to recover");
-
-        // If amount is 0, recover all available balance
         uint256 recoverAmount = amount == 0 ? balance : amount;
+
         require(recoverAmount <= balance, "Insufficient ether balance");
 
         (bool success, ) = to.call{value: recoverAmount}("");
         require(success, "Ether transfer failed");
+
         emit EtherRecovered(to, recoverAmount);
     }
 
