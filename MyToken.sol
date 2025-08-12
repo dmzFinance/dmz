@@ -224,10 +224,9 @@ contract MyToken is
      * @dev Approve a pending mint or burn request - only fund managers can call
      * @param requestID The unique identifier of the request to approve
      */
-    function approveRequest(bytes32 requestID)
-        public
-        onlyRole(FUND_MANAGER_ROLE)
-    {
+    function approveRequest(
+        bytes32 requestID
+    ) public onlyRole(FUND_MANAGER_ROLE) {
         require(
             _requests[requestID].requestedAt != 0,
             "Request does not exist"
@@ -253,10 +252,9 @@ contract MyToken is
      * @dev Reject a pending mint or burn request - only fund managers can call
      * @param requestID The unique identifier of the request to reject
      */
-    function rejectRequest(bytes32 requestID)
-        public
-        onlyRole(FUND_MANAGER_ROLE)
-    {
+    function rejectRequest(
+        bytes32 requestID
+    ) public onlyRole(FUND_MANAGER_ROLE) {
         require(
             _requests[requestID].requestedAt != 0,
             "Request does not exist"
@@ -281,11 +279,9 @@ contract MyToken is
      * @param requestID The unique identifier of the request
      * @return TokenRequest struct containing request details
      */
-    function getRequest(bytes32 requestID)
-        public
-        view
-        returns (TokenRequest memory)
-    {
+    function getRequest(
+        bytes32 requestID
+    ) public view returns (TokenRequest memory) {
         return _requests[requestID];
     }
 
@@ -307,10 +303,9 @@ contract MyToken is
      * @dev Freeze an account to prevent transfers - only admin can call
      * @param account Address of the account to freeze
      */
-    function freezeAccount(address account)
-        public
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
+    function freezeAccount(
+        address account
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
         _frozenAccounts[account] = true;
         emit AccountFrozen(account);
     }
@@ -319,10 +314,9 @@ contract MyToken is
      * @dev Unfreeze a previously frozen account - only admin can call
      * @param account Address of the account to unfreeze
      */
-    function unfreezeAccount(address account)
-        public
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
+    function unfreezeAccount(
+        address account
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
         _frozenAccounts[account] = false;
         emit AccountUnfrozen(account);
     }
@@ -372,10 +366,9 @@ contract MyToken is
      * @dev Update the identity registry contract address
      * @param newRegistry Address of the new identity registry contract
      */
-    function updateIdentityRegistry(address newRegistry)
-        public
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
+    function updateIdentityRegistry(
+        address newRegistry
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
         identityRegistryAddress = newRegistry;
     }
 
@@ -397,10 +390,9 @@ contract MyToken is
      * @dev Add multiple countries to the list
      * @param countries Array of country codes to add
      */
-    function addCountries(bytes32[] memory countries)
-        public
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
+    function addCountries(
+        bytes32[] memory countries
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
         for (uint256 i = 0; i < countries.length; i++) {
             if (countries[i] != bytes32(0) && !countryList[countries[i]]) {
                 countryList[countries[i]] = true;
@@ -413,10 +405,9 @@ contract MyToken is
      * @dev Remove a single country from the list
      * @param country Country code to remove
      */
-    function removeCountry(bytes32 country)
-        public
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
+    function removeCountry(
+        bytes32 country
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
         require(countryList[country], "Country does not exist");
 
         countryList[country] = false;
@@ -427,10 +418,9 @@ contract MyToken is
      * @dev Remove multiple countries from the list
      * @param countries Array of country codes to remove
      */
-    function removeCountries(bytes32[] memory countries)
-        public
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
+    function removeCountries(
+        bytes32[] memory countries
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
         for (uint256 i = 0; i < countries.length; i++) {
             if (countryList[countries[i]]) {
                 countryList[countries[i]] = false;
@@ -443,10 +433,9 @@ contract MyToken is
      * @dev Update the country list mode (whitelist or blacklist)
      * @param newMode New country list mode
      */
-    function updateCountryListMode(CountryListType newMode)
-        public
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
+    function updateCountryListMode(
+        CountryListType newMode
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
         countryListMode = newMode;
         emit CountryListModeChanged(newMode);
     }
@@ -494,10 +483,10 @@ contract MyToken is
      * @param to Address to send the recovered Ether to
      * @param amount Amount to recover (0 means recover all available balance)
      */
-    function recoverEther(address payable to, uint256 amount)
-        public
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
+    function recoverEther(
+        address payable to,
+        uint256 amount
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
         require(to != address(0), "Recipient address cannot be zero");
 
         uint256 balance = address(this).balance;
@@ -510,5 +499,32 @@ contract MyToken is
         (bool success, ) = to.call{value: recoverAmount}("");
         require(success, "Ether transfer failed");
         emit EtherRecovered(to, recoverAmount);
+    }
+
+    // ==================== AccessControl Functions ====================
+
+    /**
+     * @dev Override revokeRole to prevent admin self-revocation
+     */
+    function revokeRole(bytes32 role, address account) public virtual override {
+        require(
+            !(role == DEFAULT_ADMIN_ROLE && account == msg.sender),
+            "Admins cannot revoke their own admin role"
+        );
+        super.revokeRole(role, account);
+    }
+
+    /**
+     * @dev Completely disable renounceRole function
+     * @notice This function is disabled for security reasons
+     * Users cannot renounce their own roles - only admins can revoke roles
+     */
+    function renounceRole(
+        bytes32 role,
+        address callerConfirmation
+    ) public virtual override {
+        role;
+        callerConfirmation;
+        revert("IdentityRegistry: renounceRole is disabled for security");
     }
 }
