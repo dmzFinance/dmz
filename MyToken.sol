@@ -394,10 +394,11 @@ contract MyToken is
         bytes32[] memory countries
     ) public onlyRole(DEFAULT_ADMIN_ROLE) {
         for (uint256 i = 0; i < countries.length; i++) {
-            if (countries[i] != bytes32(0) && !countryList[countries[i]]) {
-                countryList[countries[i]] = true;
-                emit CountryAdded(countries[i]);
-            }
+            require(countries[i] != bytes32(0), "Invalid country code");
+            require(!countryList[countries[i]], "Country already exists");
+
+            countryList[countries[i]] = true;
+            emit CountryAdded(countries[i]);
         }
     }
 

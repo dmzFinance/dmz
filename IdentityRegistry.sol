@@ -100,10 +100,6 @@ contract IdentityRegistry is AccessControlDefaultAdminRules, IIdentityRegistry {
             "IdentityRegistry: exceeds maximum wallets per identity"
         );
         require(
-            wallets.length > 0,
-            "IdentityRegistry: must provide at least one wallet"
-        );
-        require(
             expiryDate > block.timestamp,
             "IdentityRegistry: expiry date must be in the future"
         );
