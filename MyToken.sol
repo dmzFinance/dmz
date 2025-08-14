@@ -421,6 +421,6 @@ contract MyToken is
     ) public virtual override {
         role;
         callerConfirmation;
-        revert("IdentityRegistry: renounceRole is disabled for security");
+        revert("MyToken: renounceRole is disabled for security");
     }
 }
