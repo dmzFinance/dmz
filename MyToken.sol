@@ -19,14 +19,6 @@ contract MyToken is
     using SafeERC20 for IERC20;
 
     address public identityRegistryAddress;
-    enum CountryListType {
-        Whitelist,
-        Blacklist
-    }
-    CountryListType public countryListMode;
-
-    // Mapping for O(1) lookups
-    mapping(bytes32 => bool) public countryList;
 
     uint8 private _decimals;
 
@@ -85,10 +77,6 @@ contract MyToken is
     event AccountUnfrozen(address account);
     event TokensRecovered(address token, address to, uint256 amount);
     event EtherRecovered(address to, uint256 amount);
-    event CountryAdded(bytes32 country);
-    event CountryRemoved(bytes32 country);
-    event CountryListModeChanged(CountryListType newMode);
-    event CountryListCleared();
 
     /**
      * @dev Constructor to initialize the token contract
@@ -97,17 +85,13 @@ contract MyToken is
      * @param decimals_ Number of decimals
      * @param initialAdmin Address to be granted admin role
      * @param _identityRegistryAddress Address of the identity registry contract
-     * @param _countryList Array of country codes for whitelist/blacklist
-     * @param _countryListMode Whether the country list is a whitelist or blacklist
      */
     constructor(
         string memory name,
         string memory symbol,
         uint8 decimals_,
         address initialAdmin,
-        address _identityRegistryAddress,
-        bytes32[] memory _countryList,
-        CountryListType _countryListMode
+        address _identityRegistryAddress
     )
         ERC20(name, symbol)
         ERC20Permit(name)
@@ -117,12 +101,6 @@ contract MyToken is
 
         _decimals = decimals_;
         identityRegistryAddress = _identityRegistryAddress;
-        countryListMode = _countryListMode;
-
-        // Initialize country mapping
-        for (uint256 i = 0; i < _countryList.length; i++) {
-            countryList[_countryList[i]] = true;
-        }
     }
 
     /**
@@ -322,7 +300,7 @@ contract MyToken is
     }
 
     /**
-     * @dev Verify if an address is whitelisted based on identity registry and country restrictions
+     * @dev Verify if an address is whitelisted based on identity registry
      * @param account Address to verify
      * @return bool True if the address is whitelisted, false otherwise
      */
@@ -331,14 +309,9 @@ contract MyToken is
             return true;
         }
         IdentityRegistry registry = IdentityRegistry(identityRegistryAddress);
-        (bool isWhitelisted, bytes32 country) = registry.verifyAddress(account);
+        (bool isWhitelisted, ) = registry.verifyAddress(account);
         if (!isWhitelisted) {
             return false;
-        }
-        if (countryListMode == CountryListType.Whitelist) {
-            return countryList[country];
-        } else if (countryListMode == CountryListType.Blacklist) {
-            return !countryList[country];
         }
         return true;
     }
@@ -372,84 +345,6 @@ contract MyToken is
         identityRegistryAddress = newRegistry;
     }
 
-    // ==================== Country List Management Functions ====================
-
-    /**
-     * @dev Add a single country to the list
-     * @param country Country code to add
-     */
-    function addCountry(bytes32 country) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(country != bytes32(0), "Invalid country code");
-        require(!countryList[country], "Country already exists");
-
-        countryList[country] = true;
-        emit CountryAdded(country);
-    }
-
-    /**
-     * @dev Add multiple countries to the list
-     * @param countries Array of country codes to add
-     */
-    function addCountries(
-        bytes32[] memory countries
-    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        for (uint256 i = 0; i < countries.length; i++) {
-            require(countries[i] != bytes32(0), "Invalid country code");
-            require(!countryList[countries[i]], "Country already exists");
-
-            countryList[countries[i]] = true;
-            emit CountryAdded(countries[i]);
-        }
-    }
-
-    /**
-     * @dev Remove a single country from the list
-     * @param country Country code to remove
-     */
-    function removeCountry(
-        bytes32 country
-    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(countryList[country], "Country does not exist");
-
-        countryList[country] = false;
-        emit CountryRemoved(country);
-    }
-
-    /**
-     * @dev Remove multiple countries from the list
-     * @param countries Array of country codes to remove
-     */
-    function removeCountries(
-        bytes32[] memory countries
-    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        for (uint256 i = 0; i < countries.length; i++) {
-            if (countryList[countries[i]]) {
-                countryList[countries[i]] = false;
-                emit CountryRemoved(countries[i]);
-            }
-        }
-    }
-
-    /**
-     * @dev Update the country list mode (whitelist or blacklist)
-     * @param newMode New country list mode
-     */
-    function updateCountryListMode(
-        CountryListType newMode
-    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        countryListMode = newMode;
-        emit CountryListModeChanged(newMode);
-    }
-
-    /**
-     * @dev Check if a country is in the list
-     * @param country Country code to check
-     * @return bool True if country is in the list
-     */
-    function isCountryInList(bytes32 country) public view returns (bool) {
-        return countryList[country];
-    }
-
     // ==================== Token Recovery Functions ====================
 
     /**
@@ -469,6 +364,7 @@ contract MyToken is
 
         IERC20 tokenContract = IERC20(token);
         uint256 balance = tokenContract.balanceOf(address(this));
+        require(balance > 0, "No tokens to recover");
 
         // If amount is 0, recover all available balance
         uint256 recoverAmount = amount == 0 ? balance : amount;
@@ -490,13 +386,14 @@ contract MyToken is
         require(to != address(0), "Recipient address cannot be zero");
 
         uint256 balance = address(this).balance;
-        uint256 recoverAmount = amount == 0 ? balance : amount;
+        require(balance > 0, "No ether to recover");
 
+        // If amount is 0, recover all available balance
+        uint256 recoverAmount = amount == 0 ? balance : amount;
         require(recoverAmount <= balance, "Insufficient ether balance");
 
         (bool success, ) = to.call{value: recoverAmount}("");
         require(success, "Ether transfer failed");
-
         emit EtherRecovered(to, recoverAmount);
     }
 
@@ -524,6 +421,6 @@ contract MyToken is
     ) public virtual override {
         role;
         callerConfirmation;
-        revert("IdentityRegistry: renounceRole is disabled for security");
+        revert("MyToken: renounceRole is disabled for security");
     }
 }
