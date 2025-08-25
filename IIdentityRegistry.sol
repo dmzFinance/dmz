@@ -67,6 +67,14 @@ interface IIdentityRegistry {
      */
     event DataUpdated(bytes32 indexed hashTx, bytes32 data);
 
+    /**
+    * @dev Emitted when tokens are recovered from the contract
+    * @param token Address of the recovered token contract
+    * @param to Address that received the recovered tokens
+    * @param amount Amount of tokens recovered
+    */
+    event TokensRecovered(address token, address to, uint256 amount);
+
     // ==================== Function Declarations ====================
     
     /**
