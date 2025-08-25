@@ -64,7 +64,7 @@ contract IdentityRegistry is AccessControlDefaultAdminRules, IIdentityRegistry {
     constructor(
         uint256 _maxWalletsPerIdentity,
         address _initialAdmin
-    ) AccessControlDefaultAdminRules(1 days, _initialAdmin) {
+    ) AccessControlDefaultAdminRules(0, _initialAdmin) {
         require(
             _maxWalletsPerIdentity > 0,
             "IdentityRegistry: max wallets must be greater than zero"
@@ -505,33 +505,16 @@ contract IdentityRegistry is AccessControlDefaultAdminRules, IIdentityRegistry {
     }
 
     /**
-     * @dev Recover Ether that was accidentally sent to this contract
-     * @param to Address to send the recovered Ether to
-     * @param amount Amount to recover (0 means recover all available balance)
-     */
-    function recoverEther(
-        address payable to,
-        uint256 amount
-    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(to != address(0), "Recipient address cannot be zero");
-
-        uint256 balance = address(this).balance;
-        uint256 recoverAmount = amount == 0 ? balance : amount;
-
-        require(recoverAmount <= balance, "Insufficient ether balance");
-
-        (bool success, ) = to.call{value: recoverAmount}("");
-        require(success, "Ether transfer failed");
-
-        emit EtherRecovered(to, recoverAmount);
-    }
-    /**
      * @dev Override revokeRole to prevent admin self-revocation
      */
     function revokeRole(bytes32 role, address account) public virtual override {
         require(
             !(role == DEFAULT_ADMIN_ROLE && account == msg.sender),
             "Admins cannot revoke their own admin role"
+        );
+        require(
+            hasRole(role, account),
+            "Account does not have the role to be revoked"
         );
         super.revokeRole(role, account);
     }
@@ -548,5 +531,22 @@ contract IdentityRegistry is AccessControlDefaultAdminRules, IIdentityRegistry {
         role;
         callerConfirmation;
         revert("IdentityRegistry: renounceRole is disabled for security");
+    }
+
+    /**
+    * @dev Override changeDefaultAdminDelay to disable changing delay
+    * @notice This function is permanently disabled to prevent admin delay changes
+    */
+    function changeDefaultAdminDelay(uint48 newDelay) public pure override {
+        newDelay; // Suppress unused parameter warning
+        revert("IdentityRegistry: changing admin delay is permanently disabled");
+    }
+
+    /**
+    * @dev Override rollbackDefaultAdminDelay to disable rollback functionality  
+    * @notice This function is permanently disabled
+    */
+    function rollbackDefaultAdminDelay() public pure override {
+        revert("IdentityRegistry: rollback admin delay is permanently disabled");
     }
 }

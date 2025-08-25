@@ -43,7 +43,6 @@ contract MyToken is
         uint256 requestedAt;
         uint256 finalizedAt;
     }
-    bytes32 private _lastRequestID = 0x0;
     uint256 private _requestCounter = 0;
     mapping(bytes32 => TokenRequest) private _requests;
     mapping(address => bool) private _frozenAccounts;
@@ -76,7 +75,6 @@ contract MyToken is
     event AccountFrozen(address account);
     event AccountUnfrozen(address account);
     event TokensRecovered(address token, address to, uint256 amount);
-    event EtherRecovered(address to, uint256 amount);
 
     /**
      * @dev Constructor to initialize the token contract
@@ -95,7 +93,7 @@ contract MyToken is
     )
         ERC20(name, symbol)
         ERC20Permit(name)
-        AccessControlDefaultAdminRules(1 days, initialAdmin)
+        AccessControlDefaultAdminRules(0, initialAdmin)
     {
         _setRoleAdmin(FUND_MANAGER_ROLE, DEFAULT_ADMIN_ROLE);
 
@@ -140,7 +138,6 @@ contract MyToken is
             abi.encodePacked(
                 block.timestamp,
                 msg.sender,
-                _lastRequestID,
                 uint8(RequestType.Mint),
                 _requestCounter
             )
@@ -154,7 +151,6 @@ contract MyToken is
             requestedAt: block.timestamp,
             finalizedAt: 0
         });
-        _lastRequestID = requestID;
         emit MintRequestCreated(
             requestID,
             msg.sender,
@@ -178,7 +174,6 @@ contract MyToken is
             abi.encodePacked(
                 block.timestamp,
                 msg.sender,
-                _lastRequestID,
                 uint8(RequestType.Burn),
                 _requestCounter
             )
@@ -193,7 +188,6 @@ contract MyToken is
             requestedAt: block.timestamp,
             finalizedAt: 0
         });
-        _lastRequestID = requestID;
         emit BurnRequestCreated(requestID, msg.sender, amount, block.timestamp);
         return requestID;
     }
@@ -328,6 +322,8 @@ contract MyToken is
         uint256 value
     ) internal override(ERC20, ERC20Pausable) {
         require(!_frozenAccounts[from], "ERC20: account is frozen");
+        require(value > 0, "ERC20: transfer amount must be greater than zero");
+
         if (from != address(0)) {
             require(_verifyWhitelisted(from), "ERC20: sender not whitelisted");
         }
@@ -373,30 +369,6 @@ contract MyToken is
         tokenContract.safeTransfer(to, recoverAmount);
         emit TokensRecovered(token, to, recoverAmount);
     }
-
-    /**
-     * @dev Recover Ether that was accidentally sent to this contract
-     * @param to Address to send the recovered Ether to
-     * @param amount Amount to recover (0 means recover all available balance)
-     */
-    function recoverEther(
-        address payable to,
-        uint256 amount
-    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(to != address(0), "Recipient address cannot be zero");
-
-        uint256 balance = address(this).balance;
-        require(balance > 0, "No ether to recover");
-
-        // If amount is 0, recover all available balance
-        uint256 recoverAmount = amount == 0 ? balance : amount;
-        require(recoverAmount <= balance, "Insufficient ether balance");
-
-        (bool success, ) = to.call{value: recoverAmount}("");
-        require(success, "Ether transfer failed");
-        emit EtherRecovered(to, recoverAmount);
-    }
-
     // ==================== AccessControl Functions ====================
 
     /**
@@ -406,6 +378,10 @@ contract MyToken is
         require(
             !(role == DEFAULT_ADMIN_ROLE && account == msg.sender),
             "Admins cannot revoke their own admin role"
+        );
+        require(
+            hasRole(role, account),
+            "Account does not have the role to be revoked"
         );
         super.revokeRole(role, account);
     }
@@ -422,5 +398,21 @@ contract MyToken is
         role;
         callerConfirmation;
         revert("MyToken: renounceRole is disabled for security");
+    }
+    /**
+    * @dev Override changeDefaultAdminDelay to disable changing delay
+    * @notice This function is permanently disabled to prevent admin delay changes
+    */
+    function changeDefaultAdminDelay(uint48 newDelay) public pure override {
+        newDelay; // Suppress unused parameter warning
+        revert("MyToken: changing admin delay is permanently disabled");
+    }
+
+    /**
+    * @dev Override rollbackDefaultAdminDelay to disable rollback functionality  
+    * @notice This function is permanently disabled
+    */
+    function rollbackDefaultAdminDelay() public pure override {
+        revert("MyToken: rollback admin delay is permanently disabled");
     }
 }
