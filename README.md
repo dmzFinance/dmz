@@ -22,8 +22,8 @@ URL token: https://etherscan.io/token/0xFdc381Edc0b2028693c5A3825621316bC2880275
 Stake contract address 0x99E820B7f9d0C82fD4E71f29C61983cc1caD7812 <br>URL: https://etherscan.io/address/0x99E820B7f9d0C82fD4E71f29C61983cc1caD7812<br><br>
 
 # Ethereum sepolia network deployment address
-IdentityRegistry contract address 0x65DBCFc67713092aaa3eCD30C8Fe3D6bB38ECb2C <br>URL: https://sepolia.etherscan.io/address/0x65DBCFc67713092aaa3eCD30C8Fe3D6bB38ECb2C<br><br>
-QCDT Token contract address 0xa3392c2581719c5Cd5eeDa88c39030e2f278e93D, Name: QCDT, Symbol: QCDT. <br>
-URL address: https://sepolia.etherscan.io/address/0xa3392c2581719c5Cd5eeDa88c39030e2f278e93D<br>
-URL token: https://sepolia.etherscan.io/token/0xa3392c2581719c5Cd5eeDa88c39030e2f278e93D<br><br>
+IdentityRegistry contract address 0xd2E0dC59457CF2dd5534D18d08E306C06fE49a9C <br>URL: https://sepolia.etherscan.io/address/0xd2E0dC59457CF2dd5534D18d08E306C06fE49a9C<br><br>
+QCDT Token contract address 0xA96aee25231918809750E69886845AB4c0f2E8Ec, Name: QCDT, Symbol: QCDT. <br>
+URL address: https://sepolia.etherscan.io/address/0xA96aee25231918809750E69886845AB4c0f2E8Ec<br>
+URL token: https://sepolia.etherscan.io/token/0xA96aee25231918809750E69886845AB4c0f2E8Ec<br><br>
 Stake contract address 0xA08e443E561B646265a5D06aa70510cF232fd35c <br>URL: https://sepolia.etherscan.io/address/0xA08e443E561B646265a5D06aa70510cF232fd35c<br><br>
