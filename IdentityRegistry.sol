@@ -113,10 +113,6 @@ contract IdentityRegistry is AccessControlDefaultAdminRules, IIdentityRegistry {
         // Check if all wallet addresses are available for registration
         for (uint256 i = 0; i < wallets.length; i++) {
             require(
-                wallets[i] != address(0),
-                "IdentityRegistry: wallet cannot be zero address"
-            );
-            require(
                 addressToHashTx[wallets[i]] == bytes32(0),
                 "IdentityRegistry: wallet already registered"
             );
@@ -194,10 +190,6 @@ contract IdentityRegistry is AccessControlDefaultAdminRules, IIdentityRegistry {
             // Check and register wallet addresses
             for (uint256 i = 0; i < walletsLists[j].length; i++) {
                 address wallet = walletsLists[j][i];
-                require(
-                    wallet != address(0),
-                    "IdentityRegistry: wallet cannot be zero address"
-                );
                 require(
                     addressToHashTx[wallet] == bytes32(0),
                     "IdentityRegistry: wallet already registered"
@@ -277,10 +269,6 @@ contract IdentityRegistry is AccessControlDefaultAdminRules, IIdentityRegistry {
         // Add new wallets and check if they are already registered
         for (uint256 j = 0; j < newWallets.length; j++) {
             address newWallet = newWallets[j];
-            require(
-                newWallet != address(0),
-                "IdentityRegistry: wallet cannot be zero address"
-            );
             require(
                 addressToHashTx[newWallet] == bytes32(0),
                 "IdentityRegistry: wallet already registered"
