@@ -15,7 +15,7 @@ DMZ Finance has been selected as a first-round participant in the prestigious QF
 IdentityRegistry contract address 0x7A65B44464Eb9148c354aEC8A222F0d2C316E46d<br>
 URL: https://etherscan.io/address/0x7A65B44464Eb9148c354aEC8A222F0d2C316E46d<br><br>
 
-QCD Token contract address 0x5F0bF77D05903C6696543484B70DFa77BCFb6359, Name: QCD Money Market Fund Token, Symbol: QCDT<br>
+QCD Token contract address 0x5F0bF77D05903C6696543484B70DFa77BCFb6359, Name: QCD Token, Symbol: QCDT<br>
 URL address: https://etherscan.io/address/0x5F0bF77D05903C6696543484B70DFa77BCFb6359<br>
 URL token: https://etherscan.io/token/0x5F0bF77D05903C6696543484B70DFa77BCFb6359<br><br>
 
