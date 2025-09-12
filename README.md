@@ -5,7 +5,7 @@ RWA Off Exchange Projects
 [https://dmz.finance](https://dmz.finance)
 
 ## Concept
-<div align="center"><img src="https://dmz.finance/img/kt.d1ba1331.png"></div>
+<div align="center"><img src="https://hbzp.oss-cn-shanghai.aliyuncs.com/dmz/aaaa.jpg"></div>
 DMZ is a blockchain technology solution provider. It has a strategic partnership with Qatar National Bank (QNB), the largest bank in the Middle East and Africa, and has joined the Qatar Financial Centre’s Digital Asset Lab through its strong recognition.<br><br>
 Committed to unlocking the trillion-dollar potential of the RWA market, DMZ collaborates with leading global banks to provide comprehensive, institutional-grade solutions for traditional financial institutions and investors.<br><br>
 
